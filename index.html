@@ -8,18 +8,32 @@
 </head>
 <body>
     <div>
-        <h1>View High Scores: <span id="count">0</span></h1>
+        <h1><a href="javascript:getHighScores();">View High Scores</a></h1>
+        <div id="showhigh-scores"></div>
         <div class="container">
             <button id="start" class="btn"> Start Quiz</button>
             <h2 id="countdown"></h2>
             <div id="main">
-              <div class="question-container">
-                <div id="question-span">Q: Sample Question.</div>
-                <!-- <button class="btn" id="btn-1"> hi</button> </br>
-                <button  class="btn" id="btn-2"> hello</button> </br>
-                <button  class="btn" id="btn-3"> hey </button> </br>
-                <button class="btn" id="btn-4"> hola </button> -->
+              <div id="question-span">Please click start to begin</div>
+              <div id="endgame-placeholder">
+                
+                
+                <form method="post" name="highscore-form">
+  
+                  Enter Your Initials Here <input type="text" name="high-score-initials">
+                  <button class="btn" id="save-task" type="submit">Submit High Score</button>
+
+                </form>
+
+                
               </div>
+              <div class="question-container">
+                
+              </div>
+             
+            </div>
+            <div id="answer-placeholder"></div>
+            
             </div>
             
 

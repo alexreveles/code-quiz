@@ -28,9 +28,17 @@ body {
 #main {
 border: 2px solid lightgray;
 width: 700px;
-height: 500px;
+height: 300px;
 margin: 0 auto;
 
+}
+
+#endgame-placeholder {
+    display: none;
+}
+
+#showhigh-scores {
+    display: none;
 }
 
 .btn:hover {
