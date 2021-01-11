@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View High Score</title>
+    <link rel="stylesheet" type="text/css" href="./Assets/second-style.css" />
 </head>
 <body>
+    <div class="container-box">
+    <h1>Final Score:</h1>
+    <div class="box">
     <p id="initial-content"></p>
+    </div>
+    <div class="box">
     <p id="score-content"></p>
+    </div>
     <script>
     var initials = localStorage.getItem('initials');
     let score = localStorage.getItem('score'); 
@@ -19,5 +26,6 @@
         document.querySelector("#initial-content").textContent = initials
         document.querySelector("#score-content").textContent = score
     </script>
+    </div>
 </body>
 </html>

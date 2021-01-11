@@ -7,4 +7,4 @@
 * HTML
 * CSS
 * Javascript
-[screen shot] 
+[screen shot](./images/screenshot.png)
