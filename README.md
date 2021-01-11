@@ -8,4 +8,7 @@
 * CSS
 * Javascript
 
-### [screen shot](./images/screenshot.png)git 
+ ![](./Assets/images/screenshot.png)
+
+
+ 
