@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View High Score</title>
+</head>
+<body>
+    <p id="initial-content"></p>
+    <p id="score-content"></p>
+    <script>
+    var initials = localStorage.getItem('initials');
+    let score = localStorage.getItem('score'); 
+    
+    if (initials && score) {
+       window.location = "score.html"; 
+       
+    }
+        document.querySelector("#initial-content").textContent = initials
+        document.querySelector("#score-content").textContent = score
+    </script>
+</body>
+</html>

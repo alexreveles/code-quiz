@@ -4,8 +4,6 @@
 /////////////////////////////////////////////////////////////
 
 // DOM Nodes
-
-
 let countDownEl = document.querySelector("#countdown");
 let questionContainerEl = document.querySelector(".question-container");
 let questionSpanEl = document.querySelector("#question-span");
@@ -33,36 +31,57 @@ let questions = [
 ]
 
 // run timer function
-function countDown() {
+function countDown(amount) {
     // check if time left is greater that 0
     // if it is, decrement timeLeft
     // and update countDownEl with new time
-    timeLeft--;
+
+
+    //TAKE THE ARGUMENT PASSED IN AND DECREMENT BY THAT MUCH
+    if ( amount > 1 ) {
+        timeLeft =  timeLeft - amount;
+    } else {
+        timeLeft--;
+    }
+    
     countDownEl.textContent = timeLeft
 }
 
-function endGame(score) {
-   
+function endGame(score, initials = "", status) {
 
+    if(status === "end game") {
+
+        questionContainerEl.textContent = "Your time is up, but at least you were able to score " + score; 
+        endGameArea.style.display = "block";
+        questionSpanEl.textContent = "";
+        questionContainerEl.textContent = '';
+
+    } else {
 
     // FUNCTION TO CALL WHEN THE GAME HAS ENDED 
     // EITHER RAN OUT OF TIME OR ALL QUESTIONS ANSWERED
 
     // UNHIDE THE FORM, TAKE IT FROM DISPLAY NONE, TO DISPLAY BLOCK
-    questionContainerEl.textContent = "Thank you for playing the Game, your score was " + score;
+    questionSpanEl.textContent = "";
+    questionContainerEl.textContent = '';
 
+    questionContainerEl.textContent = "Thank you for playing the Game, your score was " + score;
+    
     // MAKE THE END AREA TEXT APPEAR 
     endGameArea.style.display = "block";
+    }
 
 }
+
 
 function printQuestion(questionObj) {
 
     // PRINT THE QUESTION
-    questionSpanEl.textContent = "";
+    questionSpanEl.textContent = '';
     questionSpanEl.textContent = questionObj.q;
 
     // PRINT THE ANSWER CHOIES, THIS RESETS THEM TO BLANK PRIOR TO DISPLAYING THEM
+    // WHEN APPENDING CHILDREN NEED TO RESET THEM FIRST 
     questionContainerEl.textContent = '';
 
     // LOOP THROUGH ALL THE ANSWERS TO DISPLAY TO THE USER
@@ -114,10 +133,15 @@ function printQuestion(questionObj) {
 
                         currentQuestionindex++;
                         answerArea.textContent = "WRONG, Sorry bud!";
+
+                        // CALL THE COUNTDOWN CLOCK WITH SPECIAL NUMBER
+                        // INSTEAD OF -1 PASS IT A CUSTOM NUMBER -5 
+                        countDown(10);
                         setTimeout(function(){ 
                             answerArea.textContent = "";
                               
-                            if(currentQuestionindex === 5){
+                            if(currentQuestionindex == 5){
+
                                 endGame(score);
                             } else {
                                 printQuestion(questions[currentQuestionindex]);
@@ -134,39 +158,40 @@ function printQuestion(questionObj) {
     }
 }
 
-function getHighScores() {
+function setHighScores() {
 
     // TO DO 
-    // WHEN THE FORM HANDLER STARTS WORKING 
+
     // INSERT THE INITIALS AND SCORE TO LOCAL STORAGE
-    // WHEN LOCAL STORAGE WORKS SUCCESFULLY THIS FUNCTION WILL ALSO DISPLAY THE HIGH SCORE
-    
-    var initials = localStorage.getItem('initials');
-    var score = localStorage.getItem('score'); 
-
-    var highscoreFormHandler = function(event) {
-    var highscoreInitialsInput = document.querySelector("input[name='high-score-initials']").value;
-    var highscoreInput = score;
-
-
-    // check if inputs are empty (validate)
-    if (!highscoreInitialsInput) {
-        alert("You need to fill out the high score initials in the form!");
-        return false;
-    }
-    }
-
+    console.log("here",document.querySelector("#string-initials").elements[0].value)
+    localStorage.setItem('score', score)
+    localStorage.setItem('initials', document.querySelector("#string-initials").elements[0].value)
 }
 
-startEl.addEventListener('click', function() {
-    let countDownTimerID = setInterval(function() {
-        if (timeLeft > 0) {
-            countDown();
-        } else {
-            alert('End Game');
-            clearInterval(countDownTimerID);
-        }
-    }, 1000);
+function getHighScores()
+{
+    var initials = localStorage.getItem('initials');
+    score = localStorage.getItem('score'); 
 
-    printQuestion(questions[currentQuestionindex]);
-});
+    if (initials && score) {
+       window.location = "score.html"; 
+    }
+}
+
+
+    startEl.addEventListener('click', function() {
+        let countDownTimerID = setInterval(function() {
+            
+            if (timeLeft > 0) {
+                countDown();
+            } else {
+                //GAME TIMER HAS ENDED, CALL THE SAME FUNCTION BUT WITH NEW ARGUMENT
+                //THIRD ARGUMENT IS END GAME JUST TO DISTINGUISH BETWEEN NORMAL ENDING AND 
+                //TIMEOUT TYPE ENDING
+                endGame(score, '', 'end game');
+                clearInterval(countDownTimerID);
+            }
+        }, 1000);
+    
+        printQuestion(questions[currentQuestionindex]);
+    });
